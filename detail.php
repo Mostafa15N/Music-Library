@@ -1,56 +1,49 @@
 <?php
-
-include('data.php');
-
+include_once("source/database.php");
 
 $id = $_GET['id'];
 
-
 $single = null;
-foreach ($musicSingles as $musicSingle) {
-    if ($musicSingle['id'] == $id) {
-        $single = $musicSingle;
-        break;
-    }
+$sql = "SELECT * FROM singles WHERE id = $id";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    $single = $result->fetch_assoc();
 }
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title><?= $single['title']; ?></title>
+    <title><?= $single['titel']; ?></title>
     <link rel="stylesheet" href="style.css">
+    <script src="js/main.js"></script>
 </head>
 <body>
-    <h1><?= $single['title']; ?></h1>
+    <header class="header">
+    </header>
+
+    <h1><?= $single['titel']; ?></h1>
     <p>Naam van de artiest: <?= $single['artist']; ?></p>
     <p>Genre: <?= $single['genre']; ?></p>
     <p>Duur van het nummer: <?= $single['duration']; ?></p>
-    <p>Release Datum: <?= $single['release_date']; ?></p>
+    <p>Release Datum: <?= $single['releas_date']; ?></p>
 
     <h2>Lijst met nummers van <?= $single['artist']; ?></h2>
     <ul>
-        <?php 
-        function getOtherSongsByArtist($musicSingles, $currentArtist, $currentId) {
-            $otherSongs = [];
-        
-            foreach ($musicSingles as $single) {
-                if ($single['artist'] == $currentArtist && $single['id'] != $currentId) {
-                    $otherSongs[] = $single;
-                }
-            }
-        
-            return $otherSongs;
+        <?php
+        $otherSongs = [];
+        $sql = "SELECT * FROM singles WHERE artist = '{$single['artist']}' AND id != $id";
+        $result = $conn->query($sql);
+        while ($row = $result->fetch_assoc()) {
+            $otherSongs[] = $row;
         }
-
-        $otherSongs = getOtherSongsByArtist($musicSingles, $single['artist'], $single['id']);
-        foreach ($otherSongs as $song): ?>
-            <li><a href="detail.php?id=<?= $song['id']; ?>"><?= $song['title']; ?></a></li>
+        foreach ($otherSongs as $song) : ?>
+            <li><a href="detail.php?id=<?= $song['id']; ?>"><?= $song['titel']; ?></a></li>
         <?php endforeach; ?>
     </ul>
 
-    <img src="<?= $single['image']; ?>" alt="<?= $single['title']; ?>">
-
+    <!-- <img src="<?= $single['image']; ?>" alt="<?= $single['titel']; ?>"> -->
 
     <a href="index.php">Terug naar overzicht</a>
 </body>

@@ -1,5 +1,5 @@
-<?php
 
+<?php
 $musicSingles = [
     [
         'id' => 1,
@@ -8,7 +8,7 @@ $musicSingles = [
         'genre' => 'Genre 1',
         'duration' => '3:30',
         'release_date' => '2023',
-        'image' => 'image1.jpg'
+        'image' => ''
     ],
     [
         'id' => 2,

@@ -1,6 +1,5 @@
 <?php
-
-include('data.php');
+    include_once("source/database.php");
 ?>
 
 <!DOCTYPE html>
@@ -11,32 +10,30 @@ include('data.php');
 
     </style>
         <link rel="stylesheet" href="style.css">
+        <script src="js\main.js"></script>
+
 </head>
 <body>
 <header class="header">
 
-    </header>
+</header>
+
 
 
     <section class="muziekSingles">
 
         <ul>
-            <?php foreach ($musicSingles as $single): ?>
-                <a href="detail.php?id=<?= $single['id']; ?>">
-                <li class="singles">
-                        <figure class="singleImg">
-                            <img src="<?= $single['image']; ?>" alt="<?= $single['title']; ?>">
-                        </figure>
-                        <h2 class="titel"><?= $single['title']; ?></h2>
-                        <div>
-                            <h3 class="artiest"><?= $single['artist']; ?></h3>
-                            <h3 class="genre"><?= $single['genre']; ?></h3>
-                        </div>
-                
-                </li>
-            </a>
-            <?php endforeach; ?>
+        <?php
+
+        $sql = 'SELECT * FROM singles ORDER BY id ASC';
+        $result = $conn->query($sql);
+
+        while ($single_item = $result->fetch_assoc()){
+            include "source/singel.php";
+        }
+        ?>
         </ul>
+        
 
     </section>
 </body>

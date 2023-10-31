@@ -31,7 +31,9 @@ body{
     padding-top: 2rem;
     padding-bottom: 5rem;
 }
-
+.muziekSingles ul a{
+    text-decoration: none;
+}
 .singles{
     width: 15rem;
     height: 20rem;
