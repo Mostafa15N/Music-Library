@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
         updateMuziekSingles(); // Roep de functie op om te filteren
     });
 
-    // ...
+    
 });
 
 
